@@ -17,12 +17,13 @@ function getStyles(css) {
     }
     ha-card[bg][night] {
       background: var(--night-color);
+      color: var(--text-color-night);
     }
     ha-card[bg][fade] {
-      background: linear-gradient(var(--day-color), transparent 250%);
+      background: linear-gradient(var(--day-color), var(--day-gradient) 250%);
     }
     ha-card[bg][fade][night] {
-      background: linear-gradient(var(--night-color) 0%, transparent 300%);
+      background: linear-gradient(var(--night-color) 0%, var(--night-gradient) 300%);
     }
     .weather__icon {
       height: 40px;

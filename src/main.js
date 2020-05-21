@@ -1,3 +1,4 @@
+import tinycolor from 'tinycolor2';
 import WeatherEntity from './weather';
 import style from './style';
 import { handleClick } from './handleClick';
@@ -94,10 +95,14 @@ class SimpleWeatherCard extends LitElement {
         day: '#45aaf2',
         night: '#a55eea',
         text: 'var(--text-dark-color)',
+        nightText: 'var(--text-dark-color)',
         fade: false,
         ...config.backdrop,
       },
     };
+
+    this.config.backdrop.dayGradient = tinycolor(this.config.backdrop.day).setAlpha(0).toRgbString();
+    this.config.backdrop.nightGradient = tinycolor(this.config.backdrop.night).setAlpha(0).toRgbString();
 
     if (typeof config.primary_info === 'string')
       this.config.primary_info = [config.primary_info];
@@ -122,7 +127,7 @@ class SimpleWeatherCard extends LitElement {
         ?bg=${this.config.bg}
         ?fade=${this.config.backdrop.fade}
         ?night=${this.weather.isNight}
-        style="--day-color: ${this.config.backdrop.day}; --night-color: ${this.config.backdrop.night}; --text-color: ${this.config.backdrop.text};"
+        style="--day-color: ${this.config.backdrop.day}; --night-color: ${this.config.backdrop.night}; --text-color: ${this.config.backdrop.text}; --text-color-night: ${this.config.backdrop.nightText}; --day-gradient: ${this.config.backdrop.dayGradient}; --night-gradient: ${this.config.backdrop.nightGradient};"
         @click=${(e) => this.handleTap(e)}>
         ${this.renderIcon()}
         <div class="weather__info">

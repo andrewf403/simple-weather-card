@@ -1,6 +1,8 @@
 # Simple Weather Card
 
-[![](https://img.shields.io/github/release/kalkih/simple-weather-card.svg?style=flat-square)](https://github.com/kalkih/simple-weather-card/releases/latest)
+*This has my personal fixes for Safari browser, that I have no intention on merging back to original card. This will steer away from original more and more, as I change in to my needs*
+
+Original: [![](https://img.shields.io/github/release/kalkih/simple-weather-card.svg?style=flat-square)](https://github.com/kalkih/simple-weather-card/releases/latest)
 
 A minimalistic weather card for [Home Assistant](https://github.com/home-assistant/home-assistant) Lovelace UI, inspired by Google Material Design.
 
@@ -11,7 +13,7 @@ A minimalistic weather card for [Home Assistant](https://github.com/home-assista
 
 ### Simple install
 
-*This card is available in [HACS](https://github.com/custom-components/hacs) (Home Assistant Community Store)*
+~~*This card is available in [HACS](https://github.com/custom-components/hacs) (Home Assistant Community Store)*
 
 1. Download and copy `simple-weather-card-bundle.js` from the [latest release](https://github.com/kalkih/simple-weather-card/releases/latest) into your `config/www` directory.
 
@@ -22,7 +24,7 @@ A minimalistic weather card for [Home Assistant](https://github.com/home-assista
       - url: /local/simple-weather-card-bundle.js?v=0.7.2
         type: module
     ```
-
+~~
 ### CLI install
 
 1. Move into your `config/www` directory
@@ -37,7 +39,7 @@ A minimalistic weather card for [Home Assistant](https://github.com/home-assista
 
     ```yaml
     resources:
-      - url: /local/simple-weather-card-bundle.js?v=0.7.2
+      - url: /local/simple-weather-card-bundle.js?v=0.8.1
         type: module
     ```
 

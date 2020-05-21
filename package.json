@@ -1,6 +1,6 @@
 {
   "name": "simple-weather-card",
-  "version": "0.7.2",
+  "version": "0.8.1",
   "description": "A minimalistic and customizable graph card for Home Assistant Lovelace UI",
   "keywords": [
     "home-assistant",
@@ -14,7 +14,7 @@
     "custom-cards"
   ],
   "main": "src/main.js",
-  "repository": "git@github.com:kalkih/simple-weather-card.git",
+  "repository": "git@github.com:andrewf403/simple-weather-card.git",
   "author": "Karl Kihlström <mrkihlstrom@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -22,6 +22,7 @@
     "@babel/plugin-transform-template-literals": "^7.2.0",
     "@babel/preset-env": "^7.3.4",
     "babel-loader": "^8.0.5",
+    "tinycolor2": "^1.4.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
@@ -29,5 +30,6 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch"
-  }
+  },
+  "dependencies": {}
 }
