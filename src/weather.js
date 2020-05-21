@@ -13,8 +13,10 @@ import mixed_rain from '../icons/mixed_rain.png';
 import sunny from '../icons/sunny.png';
 import windy from '../icons/windy.svg';
 import humidity from '../icons/humidity.svg';
+import pressure from '../icons/pressure.svg';
 
 const ICONS = {
+  "clear-day": sunny,
   "clear-night": clear_night,
   cloudy,
   overcast: cloudy,
@@ -22,15 +24,22 @@ const ICONS = {
   hail: mixed_rain,
   lightning,
   "lightning-rainy": storm,
+  "partly-cloudy-day": mostly_cloudy,
+  "partly-cloudy-night": mostly_cloudy_night,
   partlycloudy: mostly_cloudy,
   pouring: heavy_rain,
+  "rain": rainy,
   rainy,
+  "sleet": mixed_rain,
+  "snow": snowy,
   snowy,
   "snowy-rainy": mixed_rain,
   sunny,
+  "wind": windy,
   windy,
   "windy-variant": windy,
   humidity,
+  pressure
 };
 
 const ICONS_NIGHT = {
@@ -68,7 +77,7 @@ export default class WeatherEntity {
   }
 
   get state() {
-    return this.toLocale('state.weather.' + this.entity.state, this.entity.state);
+    return this.toLocale('component.weather.state._.' + this.entity.state, this.entity.state);
   }
 
   get hasState() {
@@ -93,6 +102,10 @@ export default class WeatherEntity {
 
   get wind_speed() {
     return this.attr.wind_speed || 0;
+  }
+
+  get pressure() {
+    return this.attr.pressure || 0;
   }
 
   get wind_bearing() {

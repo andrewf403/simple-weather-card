@@ -19,6 +19,7 @@ const INFO = {
   humidity: { icon: 'humidity', unit: '%' },
   wind_speed: { icon: 'windy', unit: 'speed' },
   wind_bearing: { icon: 'windy', unit: '' },
+  pressure: { icon: 'pressure', unit: 'hPa' },
 }
 
 class SimpleWeatherCard extends LitElement {
@@ -149,7 +150,7 @@ class SimpleWeatherCard extends LitElement {
 
   renderIcon() {
     const icon = this.custom['icon-state']
-      ? this.weather.getIcon(this.custom['icon-state'])
+      ? this.weather.getIcon(this.custom['icon-state'].state)
       : this.weather.icon
     return this.weather.hasState && icon ? html`
       <div class="weather__icon"
