@@ -49,6 +49,7 @@ class SimpleWeatherCard extends LitElement {
     if (entityObj && this.entity !== entityObj) {
       this.entity = entityObj;
       this.weather = new WeatherEntity(hass, entityObj);
+      this.updateForecast();
     }
     const newCustom = {};
     custom.forEach(ele => {
@@ -115,6 +116,29 @@ class SimpleWeatherCard extends LitElement {
 
     if (!this.config.secondary_info)
       this.config.secondary_info = [];
+  }
+
+  async updateForecast() {
+    if (!this.weather || !this._hass) return;
+
+    try {
+      // Try to fetch forecast using the new weather.get_forecasts service (HA 2023.9+)
+      const response = await this._hass.callService(
+        'weather',
+        'get_forecasts',
+        { type: 'daily' },
+        { entity_id: this.config.entity },
+        true // return response
+      );
+
+      if (response && response[this.config.entity]) {
+        this.weather.updateForecast(response[this.config.entity].forecast);
+        this.requestUpdate();
+      }
+    } catch (error) {
+      // Service not available or failed, forecast will fall back to entity attributes (legacy)
+      console.debug('Failed to fetch forecast via service, using legacy attribute method:', error);
+    }
   }
 
   shouldUpdate(changedProps) {

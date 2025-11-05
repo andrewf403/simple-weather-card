@@ -73,7 +73,16 @@ export default class WeatherEntity {
     this.hass = hass;
     this.entity = entity;
     this.attr = entity.attributes;
-    this.forecast = entity.attributes.forecast || [[]];
+    // For backwards compatibility, check entity attributes first (pre-2024.4)
+    // If not available, initialize empty array (will be populated by updateForecast)
+    this.forecast = entity.attributes.forecast || [{}];
+  }
+
+  updateForecast(forecastData) {
+    // Update forecast data from weather.get_forecasts service (HA 2023.9+)
+    if (forecastData && forecastData.length > 0) {
+      this.forecast = forecastData;
+    }
   }
 
   get state() {
@@ -93,11 +102,11 @@ export default class WeatherEntity {
   }
 
   get high() {
-    return this.forecast[0].temperature;
+    return this.forecast[0] && this.forecast[0].temperature;
   }
 
   get low() {
-    return this.forecast[0].templow;
+    return this.forecast[0] && this.forecast[0].templow;
   }
 
   get wind_speed() {
@@ -115,11 +124,24 @@ export default class WeatherEntity {
   }
 
   get precipitation() {
-    return Math.round( (this.forecast[0].precipitation || 0) *100)/100;
+    // Check entity attributes first (some integrations may provide this)
+    // Then check forecast data (standard location for precipitation)
+    let value = 0;
+    if (this.attr.precipitation !== undefined && this.attr.precipitation !== null) {
+      value = this.attr.precipitation;
+    } else if (this.forecast[0] && this.forecast[0].precipitation !== undefined) {
+      value = this.forecast[0].precipitation;
+    }
+    return Math.round(value * 100) / 100;
   }
 
   get precipitation_probability() {
-    return this.forecast[0].precipitation_probability || 0;
+    // Check entity attributes first (some integrations may provide this)
+    // Then check forecast data (standard location for precipitation probability)
+    if (this.attr.precipitation_probability !== undefined && this.attr.precipitation_probability !== null) {
+      return this.attr.precipitation_probability;
+    }
+    return (this.forecast[0] && this.forecast[0].precipitation_probability) || 0;
   }
 
   get humidity() {
