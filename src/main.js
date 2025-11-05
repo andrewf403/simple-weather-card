@@ -51,19 +51,21 @@ class SimpleWeatherCard extends LitElement {
       this.weather = new WeatherEntity(hass, entityObj);
     }
     const newCustom = {};
-    custom.forEach(ele => {
-      const [key, sensor] = Object.entries(ele)[0]
-      if (hass.states[sensor]) {
-        const entry = hass.states[sensor];
-        const { state } = this.custom[key] || {}
-        if (state !== entry.state) {
-          newCustom[key] = {
-            state: entry.state,
-            unit: entry.attributes.unit_of_measurement,
+    if (custom && Array.isArray(custom)) {
+      custom.forEach(ele => {
+        const [key, sensor] = Object.entries(ele)[0]
+        if (hass.states[sensor]) {
+          const entry = hass.states[sensor];
+          const { state } = this.custom[key] || {}
+          if (state !== entry.state) {
+            newCustom[key] = {
+              state: entry.state,
+              unit: entry.attributes.unit_of_measurement,
+            }
           }
         }
-      }
-    });
+      });
+    }
     if (Object.entries(newCustom).length > 0 ) {
       this.custom = {
         ...this.custom,

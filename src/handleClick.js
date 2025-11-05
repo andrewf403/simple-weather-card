@@ -18,5 +18,6 @@ export const handleClick = (node, hass, config, actionConfig) => {
       const [ domain, service ] = actionConfig.service.split(".", 2);
       const serviceData = { ...actionConfig.service_data };
       hass.callService(domain, service, serviceData);
+      break;
   }
 };
