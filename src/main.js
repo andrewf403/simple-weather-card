@@ -221,3 +221,12 @@ class SimpleWeatherCard extends LitElement {
 }
 
 customElements.define('simple-weather-card', SimpleWeatherCard);
+
+// Make the card discoverable in Home Assistant's card picker.
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: 'simple-weather-card',
+  name: 'Simple Weather Card',
+  preview: false,
+  description: 'A minimalistic weather card for Home Assistant',
+});

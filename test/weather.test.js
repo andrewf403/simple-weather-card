@@ -56,3 +56,18 @@ test('localizes other labels without requiring legacy resources', () => {
   const hass = { localize: (key) => key === 'state.default.unknown' ? 'Unknown' : '' };
   assert.equal(new WeatherEntity(hass, entity).wind_bearing, 'Unknown');
 });
+
+test('renders zero degrees as north and other numeric bearings correctly', () => {
+  for (const [bearing, expected] of [[0, 'N'], [90, 'E'], [180, 'S'], [270, 'W'], [360, 'N']]) {
+    const weather = new WeatherEntity({}, { ...entity, attributes: { wind_bearing: bearing } });
+    assert.equal(weather.wind_bearing, expected);
+  }
+});
+
+test('uses the unknown label for missing or invalid wind bearings', () => {
+  const hass = { localize: () => 'Unknown' };
+  for (const bearing of [undefined, null, NaN, Infinity, '', 'undefined']) {
+    const weather = new WeatherEntity(hass, { ...entity, attributes: { wind_bearing: bearing } });
+    assert.equal(weather.wind_bearing, 'Unknown');
+  }
+});

@@ -112,7 +112,7 @@ export default class WeatherEntity {
   }
 
   get wind_bearing() {
-    return this.attr.wind_bearing
+    return Number.isFinite(this.attr.wind_bearing)
       ? this.degToDirection(this.attr.wind_bearing)
       : this.toLocale('state.default.unknown');
   }
