@@ -77,7 +77,10 @@ export default class WeatherEntity {
   }
 
   get state() {
-    return this.toLocale('component.weather.state._.' + this.entity.state, this.entity.state);
+    return this.toLocale([
+      'component.weather.entity_component._.state.' + this.entity.state,
+      'component.weather.state._.' + this.entity.state,
+    ], this.entity.state);
   }
 
   get hasState() {
@@ -141,10 +144,20 @@ export default class WeatherEntity {
     return ICONS[icon];
   }
 
-  toLocale(string, fallback = 'unknown') {
+  toLocale(key, fallback = 'unknown') {
+    const keys = Array.isArray(key) ? key : [key];
     const lang = this.hass.selectedLanguage || this.hass.language;
-    const resources = this.hass.resources[lang];
-    return (resources && resources[string] ? resources[string] : fallback);
+    const resources = this.hass.resources && this.hass.resources[lang];
+
+    for (const translationKey of keys) {
+      const translated = typeof this.hass.localize === 'function'
+        ? this.hass.localize(translationKey)
+        : undefined;
+      if (translated) return translated;
+      // Older Home Assistant versions exposed translations through resources.
+      if (resources && resources[translationKey]) return resources[translationKey];
+    }
+    return fallback;
   }
 
   degToDirection (deg) {
