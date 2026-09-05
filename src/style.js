@@ -5,7 +5,6 @@ function getStyles(css) {
       flex-flow: row;
       align-items: center;
       padding: 16px;
-      color: var(--primary-text-color, #000);
       font-weight: var(--swc-font-weight, 400);
       transition: background 1s;
       cursor: pointer;
@@ -23,7 +22,10 @@ function getStyles(css) {
       background: linear-gradient(var(--day-color), var(--day-gradient) 250%);
     }
     ha-card[bg][fade][night] {
-      background: linear-gradient(var(--night-color) 0%, var(--night-gradient) 300%);
+      background: linear-gradient(
+        var(--night-color) 0%,
+        var(--night-gradient) 300%
+      );
     }
     .weather__icon {
       height: 40px;
@@ -40,7 +42,7 @@ function getStyles(css) {
       width: 1em;
       min-width: 1em;
       flex: initial;
-      margin: 0 .2em;
+      margin: 0 0.2em;
     }
     .weather__info {
       display: flex;
